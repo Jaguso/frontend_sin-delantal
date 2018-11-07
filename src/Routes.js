@@ -5,6 +5,7 @@ import {BrowserRouter as Router,
 import Signup from './Components/Signup/Signup';
 import Navbar from './Components/Navbar/Navbar';
 import Login from './Components/Login/Login';
+import FormRestaurant from './Components/FormRestaurant/FormRestaurant';
 
 class Routes extends Component{
   render(){
@@ -16,6 +17,7 @@ class Routes extends Component{
             <Route exact path="/" component={Signup} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/restaurant/create" component={FormRestaurant} />
           </div>
         </main>
       </Router>
