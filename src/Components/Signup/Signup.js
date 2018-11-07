@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
- class Signup extends Component{
+import { createUser } from '../../services';
+
+class Signup extends Component{
   constructor(){
     super();
     this.state = {
@@ -7,29 +9,41 @@ import React, {Component} from 'react';
       lastname: "",
       email: "",
       password: "",
-      checkPassword: ""
+      checkPassword: "",
+      phone: "",
+      paypalid: ""
     }
   }
+
   onChangeInput = (event) => {
     const {name, value} = event.target
-    console.log("Evento: ", event)
+    
+    console.log("Evento: ", event.target)
     console.log("Valores: ", name, value)
     this.setState({[name]: value})  //obs: el input debe tener el mismo nombre que el estado
   }
+
   validPasswords = () => {
-    const {passord, checkPassword} = this.state
-    return passord === checkPassword; 
+    const {password, checkPassword} = this.state
+    return password === checkPassword; 
   }
-  onSubmit = (event) => {
+
+  onSubmit = async(event) => {
     event.preventDefault();
+
     if(this.validPasswords()){
-      // mandar data 
-    } else{
+      let response = {}
+      response = await createUser(this.state).catch(({response}) => alert(response.data.error.errors[0].message))
+      if(response) {
+        console.log(response.data.id, response.data.name)
+      }
+     } else{
       alert("Los passwords no coinciden")
     }
   }
+
   render() {
-    const {name, lastname, password, email, checkPassword} = this.state
+    const {name, lastname, password, checkPassword, email, phone, paypalid} = this.state
     return(
       <div className="row justify-content-center">
         <div className="col-md-10">
@@ -58,7 +72,7 @@ import React, {Component} from 'react';
               </div>
               <div className="row justify-content-center">
                 <div className="col-md-10 form-group">
-                  <label htmlFor="">Tu email:</label>
+                  <label htmlFor="email">Tu email:</label>
                   <input 
                     type="email" 
                     name="email" 
@@ -68,7 +82,7 @@ import React, {Component} from 'react';
                   />
                 </div>
                 <div className="col-md-10 form-group">
-                  <label htmlFor="">Tu Password:</label>
+                  <label htmlFor="password">Tu Password:</label>
                   <input 
                     type="password" 
                     name="password" 
@@ -81,9 +95,29 @@ import React, {Component} from 'react';
                   <label htmlFor="">Confirma tu password:</label>
                   <input 
                     type="password" 
-                    name="confirmpassword" 
+                    name="checkPassword" 
                     className="form-control" 
                     value={checkPassword} 
+                    onChange={this.onChangeInput}  
+                  />
+                </div>
+                <div className="col-md-10 form-group">
+                  <label htmlFor="phone">Tu Teléfono:</label>
+                  <input 
+                    type="text" 
+                    name="phone" 
+                    className="form-control" 
+                    value={phone} 
+                    onChange={this.onChangeInput}
+                  />
+                </div>
+                <div className="col-md-10 form-group">
+                  <label htmlFor="paypal">Paypal Id:</label>
+                  <input 
+                    type="text" 
+                    name="paypalid" 
+                    className="form-control" 
+                    value={paypalid} 
                     onChange={this.onChangeInput}
                   />
                 </div>
