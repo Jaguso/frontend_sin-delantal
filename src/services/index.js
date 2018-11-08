@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const API_URL = "https://localhost:8086/api/v1";
+const API_URL = "http://localhost:8086/api/v1";
 
 const createUser = (data) => axios.post(`${API_URL}/users/signup/`, data)
 

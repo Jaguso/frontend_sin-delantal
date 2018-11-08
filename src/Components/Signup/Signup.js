@@ -34,8 +34,9 @@ class Signup extends Component{
     if(this.validPasswords()){
       let response = {}
       response = await createUser(this.state).catch(({response}) => alert(response.data.error.errors[0].message))
+      console.log(this.state)
       if(response) {
-        console.log(response.data.id, response.data.name)
+        console.log(response)
       }
      } else{
       alert("Los passwords no coinciden")

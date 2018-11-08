@@ -11,7 +11,7 @@ class Login extends Component {
   }
   onChangeInput = (event) => {
     const {name, value} = event.target
-    console.log("Evento: ", event.target)
+    // console.log("Evento: ", event.target)
     console.log("Valores: ", name, value)
     this.setState({[name]: value})  //obs: el input debe tener el mismo nombre que el estado
   }
@@ -23,7 +23,9 @@ class Login extends Component {
                             .catch(() => alert(response.data.message))
     if(response){
       const {token} = response.data
-      localStorage.setItem('airbnbToken', token) //esto guarda el {key, value} que pusimos en localStorage (una pequeña base de datos en la pag web)
+      console.log(response)
+      console.log(token)
+      localStorage.setItem('sindelantalToken', token) //esto guarda el {key, value} que pusimos en localStorage (una pequeña base de datos en la pag web)
       this.props.history.push('/') //esto hace que regresemos a home despues de hacer login
     }
   }
