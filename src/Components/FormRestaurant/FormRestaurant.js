@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import FormAddressRestaurant from './FormAddressRestaurant';
 
 class FormRestaurant extends Component {
 
@@ -15,10 +15,20 @@ class FormRestaurant extends Component {
     }
   }
 
+  onChangeInput = (event) => {
+    const {name, value} = event.target
+    this.setState({[name]: value})
+    // console.log("Evento: ", event.target)
+    console.log("Valores: ", name, value)
+  }
+
   render() {
     return(
       <div className="row justify-content-center">
         <div className="col-md-10">
+          <br/><br/>
+          <h3>Datos del restaurante </h3>
+          <br/>
           <form onSubmit={this.formSubmit}>
             <div className="form-group">
               <label htmlFor="">Nombre del Restaurante:</label>
@@ -73,12 +83,16 @@ class FormRestaurant extends Component {
             <div>
               <label>Agregar Imágenes</label>
             </div>
+            <br/><br/>
+            <h3>Ingresa la dirección del restaurante </h3>
+            <br/>
+            <FormAddressRestaurant />
 
             <button type="submit" className="btn btn-success">
               Crear Restaurante
             </button>
-
           </form>
+          <br/><br/>
         </div>
       </div>
     )
