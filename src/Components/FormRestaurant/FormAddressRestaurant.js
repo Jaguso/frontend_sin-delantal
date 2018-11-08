@@ -22,6 +22,8 @@ class FormAddressRestaurant extends Component {
     console.log("Valores: ", name, value)
   }
 
+  getState = () => this.state
+
   render() {
     return(
       <div>

@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import FormAddressRestaurant from './FormAddressRestaurant';
 
+import Firebase from '../../Firebase';
+import FileUploader from 'react-firebase-file-uploader';
+
+import {createRestaurant} from '../../services';
+
 class FormRestaurant extends Component {
 
   constructor(props){
@@ -20,6 +25,46 @@ class FormRestaurant extends Component {
     this.setState({[name]: value})
     // console.log("Evento: ", event.target)
     console.log("Valores: ", name, value)
+  }
+
+  handleUploadSuccess = (filename) => {
+    Firebase
+      .storage()
+      .ref('restaurants')
+      .child(filename)
+      .getDownloadURL()
+      .then(url => {
+        this.setState(prevState => ({
+          photos: [
+            ...prevState.photos,
+            url
+          ]
+        }))
+      })
+  }
+
+  handleUploadError = (error) => {
+    console.log(error)
+  }
+
+  formSubmit = async(e) => {
+    e.preventDefault();
+    
+    // el refs aparece como props al llamar la componente FormAddressRestaurant
+    let data = {
+      ...this.state,
+      address_restaurant: {...this.refs.address_restaurant.getState()},
+    }
+    
+    let response = await createRestaurant(data).catch(e => console.log(e))
+    
+    if(response){
+      this.props.history.push('/')
+      console.log(response)
+    }
+    // console.log(this.state)
+    // console.log(this.refs.address.getState())
+    // console.log(this.refs.facilities.getState())
   }
 
   render() {
@@ -49,15 +94,15 @@ class FormRestaurant extends Component {
                 onChange={this.onChangeInput}
               >
                 <option value="1">Comida Mexicana</option>
-                <option value="2">Comida Mexicana</option>
-                <option value="3">Comida Mexicana</option>
-                <option value="4">Comida Mexicana</option>
-                <option value="5">Comida Mexicana</option>
-                <option value="6">Comida Mexicana</option>
-                <option value="7">Comida Mexicana</option>
-                <option value="8">Comida Mexicana</option>
-                <option value="9">Comida Mexicana</option>
-                <option value="10">Comida Mexicana</option>
+                <option value="2">Sushi</option>
+                <option value="3">Comida Italiana</option>
+                <option value="4">Comida China</option>
+                <option value="5">Comida Rápida</option>
+                <option value="6">Taquería</option>
+                <option value="7">Comida Vegana</option>
+                <option value="8">Pizzeria</option>
+                <option value="9">Kebbabs</option>
+                <option value="10">Café y Panadería</option>
               </select>
             </div>
             <div className="form-group">
@@ -81,12 +126,24 @@ class FormRestaurant extends Component {
               />
             </div>
             <div>
-              <label>Agregar Imágenes</label>
+              <label className="btn btn-info">
+                Agregar Imágenes
+                <FileUploader 
+                  hidden
+                  accept="image/"
+                  randomizeFilename
+                  multiple
+                  storageRef={Firebase.storage().ref('restaurants')}
+                  onUploadSuccess={this.handleUploadSuccess}
+                />
+              </label>
             </div>
             <br/><br/>
             <h3>Ingresa la dirección del restaurante </h3>
             <br/>
-            <FormAddressRestaurant />
+            <FormAddressRestaurant 
+              ref="address_restaurant"
+            />
 
             <button type="submit" className="btn btn-success">
               Crear Restaurante

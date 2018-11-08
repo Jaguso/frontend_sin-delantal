@@ -7,8 +7,15 @@ const createUser = (data) => axios.post(`${API_URL}/users/signup/`, data)
 
 const loginUser = (data) => axios.post(`${API_URL}/users/login/`, data)
 
+const createRestaurant = (data) => axios.post(`${API_URL}/restaurants`, data,
+{headers: {"Authorization": `JWT ${localStorage.getItem('sindelantalToken')}`}})
+
+const getRestaurants = () => axios.get(`${API_URL}/restaurants`)
 
 export { 
   createUser,
-  loginUser 
+  loginUser,
+  createRestaurant,
+  getRestaurants
+  
 }
