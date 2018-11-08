@@ -1,19 +1,45 @@
 import React, { Component } from 'react';
 import './style.scss';
- class Navbar extends Component {
-   render() {
+import payload from '../../resolvers/payload';
+import isAuthenticated from '../../resolvers/isAuthenticated';
+
+
+class Navbar extends Component {
+
+
+  authenticatedRender = () => {
+    if(isAuthenticated()){
+      let user = payload(localStorage.getItem('sindelantalToken')).email
+      return (
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <a className="nav-link" href="/me">Hola {user}!! </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+      )
+    }else{
+      return(
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <a className="nav-link" href="/login">Login</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/signup">SignUp</a>
+          </li>
+        </ul>
+      )
+    }
+  }
+
+  render() {
     return(
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <a className="navbar-brand" href="#">Sin delantal</a>
          <div className="collapse navbar-collapse">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <a className="nav-link" href="">Login</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="">SignUp</a>
-            </li>
-          </ul>
+          {this.authenticatedRender()}
         </div>
       </nav>
     );
