@@ -36,6 +36,7 @@ class Home extends Component {
     return (
       <div className="row">
         <h2 className="mb-4">Restaurantes </h2>
+        {/* <button>Crear nuevo restaurante</button> */}
         <div className="row">
           {
             (this.state.isLoading) ? (<h4>Cargando...</h4>) : this.renderRestaurants()

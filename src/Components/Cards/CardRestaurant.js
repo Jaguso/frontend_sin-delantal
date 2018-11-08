@@ -20,7 +20,7 @@ class CardRestaurant extends Component {
           <img src={this.state.image} className="card-img-top" alt="" />
           <div className="card-body">
             <h5 className="card-title">{this.state.name}</h5>
-            <a href={`/houses/${this.state.id}`} className="btn btn-info">Ver Resturante</a>
+            <a href={`/restaurants/${this.state.id}`} className="btn btn-info">Ver Resturante</a>
            </div>
          </div>
        </div>

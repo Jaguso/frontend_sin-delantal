@@ -12,10 +12,15 @@ const createRestaurant = (data) => axios.post(`${API_URL}/restaurants`, data,
 
 const getRestaurants = () => axios.get(`${API_URL}/restaurants`)
 
+const createDish = (data) => axios.post(`${API_URL}/restaurants/dishes`, data,   
+{headers: {"Authorization": `JWT ${localStorage.getItem('sindelantalToken')}`}})
+
+
 export { 
   createUser,
   loginUser,
   createRestaurant,
-  getRestaurants
+  getRestaurants,
+  createDish
   
 }

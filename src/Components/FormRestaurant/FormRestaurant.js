@@ -130,7 +130,7 @@ class FormRestaurant extends Component {
                 Agregar Imágenes
                 <FileUploader 
                   hidden
-                  accept="image/"
+                  accept="image/*"
                   randomizeFilename
                   multiple
                   storageRef={Firebase.storage().ref('restaurants')}
